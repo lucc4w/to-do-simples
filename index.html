@@ -1,57 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>@lucc4w</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-
-body {
-  overflow: hidden; /* Esconde as barras de rolagem */
-}
-
-/* Estilos para telas menores que 600px */
-@media only screen and (max-width: 600px) {
-  .center {
-    width: 100%;
-  }
-}
-
-/* Estilos para o pop-up */
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 10px;
-  border: 1px solid black;
-  background-color: white;
-  display: none; /* O pop-up está escondido por padrão */
-}
-</style>
-<script>
-function showPopup() {
-  document.getElementById('myPopup').style.display = 'block';
-}
-
-function goToLink() {
-  window.location.href = "https://www.youtube.com/watch?v=pnMD7wA3tWg";
-}
-</script>
+  <title>to-do lucc4w</title>
+  <style>
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* Estilo do formulário */
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+    /* Estilo do campo de texto */
+    input[type=text] {
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    /* Estilo do botão de adicionar */
+    input[type=submit] {
+      width: 50px;
+      padding: 10px;
+      background-color: #0000FF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    /* Estilo da lista de tarefas */
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: center; /* Centraliza a lista */
+    }
+    /* Estilo dos itens da lista */
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    /* Estilo do texto das tarefas */
+    span {
+      margin-left: 10px;
+    }
+    /* Estilo do texto das tarefas concluídas */
+    .done {
+      color: gray;
+      text-decoration: line-through;
+    }
+  </style>
 </head>
-<body>
-<p>clica no cachorro corinthian se tiver coragem</p>
-<img src="dogcorinthians.jpg" alt="Sua Imagem" class="center" onclick="showPopup()" ondblclick="goToLink()">
+<body style="overflow: hidden;">
+  <img src="icon.jpg" alt="Ícone" width="200" height="200">
+  <!-- Formulário para adicionar novas tarefas -->
+  <form id="todo-form">
+    <input type="text" id="todo-input" placeholder="Digite uma nova tarefa...">
+    <input type="submit" id="todo-submit" value="Add">
+  </form>
+  <!-- Lista de tarefas -->
+  <ul id="todo-list">
+    <!-- Exemplo de tarefa -->
+    <li>
+      <input type="checkbox" id="todo-1"> <!-- Adiciona um id ao checkbox -->
+      <label for="todo-1">Exemplo de tarefa</label> <!-- Adiciona um label com o atributo for -->
+    </li>
+  </ul>
+  <!-- Script para adicionar e marcar tarefas -->
+  <script>
+    // Selecionar os elementos do HTML
+    var todoForm = document.getElementById("todo-form");
+    var todoInput = document.getElementById("todo-input");
+    var todoList = document.getElementById("todo-list");
 
-<!-- O pop-up -->
-<div id="myPopup" class="popup">
-    <p>clica duas vezes no cachorro corinthins pra tu ve</p>
-</div>
+    // Função para criar um novo item da lista
+    var createTodoItem = function(text) {
+      // Criar um elemento li
+      var li = document.createElement("li");
+      // Criar um elemento input do tipo checkbox
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      // Criar um elemento span para o texto da tarefa
+      var span = document.createElement("span");
+      span.textContent = text;
+      // Criar um elemento label para o checkbox
+      var label = document.createElement("label");
+      // Gerar um id único para o checkbox
+      var id = "todo-" + Math.random().toString(36).substr(2, 9);
+      // Atribuir o id ao checkbox e o for ao label
+      checkbox.id = id;
+      label.htmlFor = id;
+      // Adicionar os elementos ao li
+      li.appendChild(checkbox);
+      li.appendChild(label);
+      label.appendChild(span);
+      // Retornar o li
+      return li;
+    };
 
+    // Função para adicionar uma nova tarefa
+    var addTodo = function(event) {
+      // Evitar o comportamento padrão do formulário
+      event.preventDefault();
+      // Obter o texto digitado pelo usuário
+      var text = todoInput.value;
+      // Verificar se o texto não está vazio
+      if (text) {
+        // Criar um novo item da lista com o texto
+        var item = createTodoItem(text);
+        // Adicionar o item à lista
+        todoList.appendChild(item);
+        // Limpar o campo de texto
+        todoInput.value = "";
+      }
+    };
+
+    // Função para marcar uma tarefa como concluída
+    var markTodo = function(event) {
+      // Obter o elemento que disparou o evento
+      var target = event.target;
+      // Verificar se o elemento é um checkbox
+      if (target.type === "checkbox") {
+        // Obter o elemento pai do checkbox (o li)
+        var li = target.parentNode;
+        // Verificar se o checkbox está marcado ou não
+        if (target.checked) {
+          // Adicionar a classe done ao span
+          li.querySelector("span").classList.add("done");
+        } else {
+          // Remover a classe done do span
+          li.querySelector("span").classList.remove("done");
+        }
+      }
+    };
+
+    // Adicionar um listener de evento ao formulário para adicionar tarefas
+    todoForm.addEventListener("submit", addTodo);
+
+    // Adicionar um listener de evento à lista para marcar tarefas
+    todoList.addEventListener("click", markTodo);
+  </script>
+<p style="text-align:center;"><a href="https://instagram.com/lucc4w">@lucc4w</a></p>
 </body>
 </html>
